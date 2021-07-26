@@ -6,25 +6,21 @@
     </div>
 </div>
 
-<div class="form-check row" :class="{'has-danger': errors.has('lancar_para_turma'), 'has-success': fields.lancar_para_turma && fields.lancar_para_turma.valid }">
+<div class="form-check row">
     <div class="ml-md-auto" :class="isFormLocalized ? 'col-md-8' : 'col-md-10'">
-        <input class="form-check-input" id="lancar_para_turma" type="checkbox" v-model="form.lancar_para_turma" v-validate="''" data-vv-name="lancar_para_turma"  name="lancar_para_turma_fake_element">
+        <input class="form-check-input" id="lancar_para_turma" value="lancar_para_turma" type="radio" v-model="form.lancar_para" v-validate="''" data-vv-name="lancar_para_turma"  name="lancar_para_turma_fake_element">
         <label class="form-check-label" for="lancar_para_turma">
             {{ trans('admin.disciplina.columns.lancar_para_turma') }}
         </label>
-        <input type="hidden" name="lancar_para_turma" :value="form.lancar_para_turma">
-        <div v-if="errors.has('lancar_para_turma')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('lancar_para_turma') }}</div>
     </div>
 </div>
 
-<div class="form-check row" :class="{'has-danger': errors.has('lancar_para_curso'), 'has-success': fields.lancar_para_curso && fields.lancar_para_curso.valid }">
+<div class="form-check row">
     <div class="ml-md-auto" :class="isFormLocalized ? 'col-md-8' : 'col-md-10'">
-        <input class="form-check-input" id="lancar_para_curso" type="checkbox" v-model="form.lancar_para_curso" v-validate="''" data-vv-name="lancar_para_curso"  name="lancar_para_curso_fake_element">
+        <input class="form-check-input" id="lancar_para_curso" value="lancar_para_curso" type="radio" v-model="form.lancar_para" v-validate="''" data-vv-name="lancar_para_curso"  name="lancar_para_curso_fake_element">
         <label class="form-check-label" for="lancar_para_curso">
             {{ trans('admin.disciplina.columns.lancar_para_curso') }}
         </label>
-        <input type="hidden" name="lancar_para_curso" :value="form.lancar_para_curso">
-        <div v-if="errors.has('lancar_para_curso')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('lancar_para_curso') }}</div>
     </div>
 </div>
 
@@ -46,7 +42,7 @@
 
 <div v-if="form.lancar_para_curso" class="form-group row align-items-center" :class="{'has-danger': errors.has('curso'), 'has-success': fields.curso && fields.curso.valid }">
     <label for="curso" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.disciplina.columns.curso_id') }}</label>
-        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+    <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
         {{-- <input type="text" v-model="form.curso_id" v-validate="'required|integer'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('curso_id'), 'form-control-success': fields.curso_id && fields.curso_id.valid}" id="curso_id" name="curso_id" placeholder="{{ trans('admin.disciplina.columns.curso_id') }}"> --}}
         <multiselect
             v-model="form.curso"

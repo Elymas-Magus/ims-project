@@ -24,11 +24,17 @@ class Turma extends Model
     ];
 
     protected $appends = ['resource_url'];
+    protected $with = ['curso'];
 
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute()
     {
         return url('/ava/turmas/'.$this->getKey());
+    }
+
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class, 'curso_id', 'id');
     }
 }

@@ -106,9 +106,9 @@ class DisciplinasController extends Controller
         if (empty($sanitized['turma']) && empty($sanitized['curso'])) {
             abort (403, "Ao menos uma turma ou um curso deve ser selecionado");
         }
-        if ($sanitized['lancar_para_turma']) {
+        if ($sanitized['lancar_para'] == 'lancar_para_turma') {
             $turmas = $sanitized['turma'];
-        } elseif ($sanitized['lancar_para_curso']) {
+        } elseif ($sanitized['lancar_para'] == 'lancar_para_curso') {
             $turmas = $this->turmaService->getTurmasByCurso($sanitized['curso']['id'])->toArray();
         }
 

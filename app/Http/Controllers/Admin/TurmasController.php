@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\Turma\DestroyTurma;
 use App\Http\Requests\Admin\Turma\IndexTurma;
 use App\Http\Requests\Admin\Turma\StoreTurma;
 use App\Http\Requests\Admin\Turma\UpdateTurma;
+use App\Http\Services\CursoServiceInterface;
+use App\Http\Services\TurmaServiceInterface;
 use App\Models\Curso;
 use App\Models\Turma;
 use Brackets\AdminListing\Facades\AdminListing;
@@ -24,6 +26,17 @@ use Illuminate\View\View;
 
 class TurmasController extends Controller
 {
+    private $turmaService;
+    private $cursoService;
+
+    /**
+     * Class constructor.
+     */
+    public function __construct(TurmaServiceInterface $turmaService, CursoServiceInterface $cursoService)
+    {
+        $this->turmaService = $turmaService;
+        $this->cursoService = $cursoService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -68,7 +81,7 @@ class TurmasController extends Controller
         $this->authorize('admin.turma.create');
 
         return view('admin.turma.create', [
-            'cursos' => Curso::all(),
+            'cursos' => $this->cursoService->listarCursosAtivos(),
         ]);
     }
 
@@ -120,9 +133,9 @@ class TurmasController extends Controller
     {
         $this->authorize('admin.turma.edit', $turma);
 
-
         return view('admin.turma.edit', [
             'turma' => $turma,
+            'cursos' => $this->cursoService->listarCursosAtivos(),
         ]);
     }
 

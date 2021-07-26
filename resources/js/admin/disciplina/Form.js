@@ -9,28 +9,27 @@ Vue.component('disciplina-form', {
                 turma:  '' ,
                 professor:  '' ,
                 curso: '' ,
-                lancar_para_turma: false,
-                lancar_para_curso: true,
+                lancar_para: '',
+                lancar_para_turma: '',
+                lancar_para_curso: '',
                 activated:  true ,
 
             }
         }
     },
     watch: {
-        'form.lancar_para_turma': {
-            handler: function handler() {
-                if (this.form.lancar_para_turma) {
-                    this.form.lancar_para_curso = false;
+        'form.lancar_para': {
+            handler: function () {
+                var _this = this;
+                if (_this.form.lancar_para === 'lancar_para_turma') {
+                    _this.form.lancar_para_turma = true;
+                    _this.form.lancar_para_curso = false;
+                } else if (_this.form.lancar_para === 'lancar_para_curso') {
+                    _this.form.lancar_para_turma = false;
+                    _this.form.lancar_para_curso = true;
                 }
-            }
+            },
         },
-        'form.lancar_para_curso': {
-            handler: function handler() {
-                if (this.form.lancar_para_curso) {
-                    this.form.lancar_para_turma = false;
-                }
-            }
-        }
     }
 
 });

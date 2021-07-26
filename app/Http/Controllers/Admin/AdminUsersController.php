@@ -54,16 +54,14 @@ class AdminUsersController extends Controller
     public function index(IndexAdminUser $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(AdminUser::class)->processRequestAndGet(
-            // pass the request with params
-            $request,
-
-            // set columns to query
-            ['id', 'first_name', 'last_name', 'email', 'activated', 'forbidden', 'language', 'last_login_at'],
-
-            // set columns to searchIn
-            ['id', 'first_name', 'last_name', 'email', 'language']
-        );
+        $data = AdminListing::create(AdminUser::class)->attachOrdering('id', 'desc')
+            ->attachSearch($request->input('search', null), ['id', 'first_name', 'last_name', 'email', 'language'])
+            ->attachPagination($request->input('page', 1), $request->input('per_page', $request->cookie('per_page', 10)))
+            ->modifyQuery(function ($query) use ($request) {
+                $query->join('model_has_roles as mhr', 'admin_users.id', '=', 'mhr.model_id')
+                    ->where('mhr.role_id', '<>', Config::get('constants.ROLES.aluno'));
+            })
+            ->get(['id', 'first_name', 'last_name', 'email', 'activated', 'forbidden', 'language', 'last_login_at']);
 
         if ($request->ajax()) {
             return ['data' => $data, 'activation' => Config::get('admin-auth.activation_enabled')];
